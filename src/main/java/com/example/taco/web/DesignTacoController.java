@@ -4,14 +4,19 @@ import com.example.taco.Ingredient;
 import com.example.taco.Ingredient.Type;
 import com.example.taco.Taco;
 import com.example.taco.TacoOrder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
+@SessionAttributes("tacoOrder")
 @Controller
 @RequestMapping("/design")
 public class DesignTacoController {
@@ -30,7 +35,7 @@ public class DesignTacoController {
                 new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
         );
 
-        Type[] types = Type.values();
+        Type[] types = Ingredient.Type.values();
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
