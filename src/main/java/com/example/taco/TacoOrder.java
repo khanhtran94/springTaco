@@ -1,9 +1,12 @@
 package com.example.taco;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -13,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Table
+@Entity
 public class TacoOrder implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -39,6 +42,8 @@ public class TacoOrder implements Serializable {
     private String ccCVV;
 
     private Date placedAt;
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Taco> tacos = new ArrayList<>();
 
     public void addTaco(Taco taco) {
