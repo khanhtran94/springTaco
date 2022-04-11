@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Types;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.*;
+import java.util.List;
 
 @Repository
 public class JdbcOrderRepository implements OrderRepository {
@@ -30,8 +30,8 @@ public class JdbcOrderRepository implements OrderRepository {
                         "insert into taco_order (delivery_name, delivery_street, delivery_city," +
                                 " delivery_state, delivery_zip, cc_number, cc_expiration, cc_cvv, placed_at)" +
                                 " value (?, ?, ?, ?, ?, ?, ?, ?, ?)", Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP
-                        );
+                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP
+                );
         pscf.setReturnGeneratedKeys(true);
 
         order.setPlacedAt(new Date());
@@ -55,13 +55,14 @@ public class JdbcOrderRepository implements OrderRepository {
         order.setId(orderId);
 
         List<Taco> tacos = order.getTacos();
-        int i=0;
+        int i = 0;
         for (Taco taco : tacos) {
             saveTaco(orderId, i++, taco);
         }
 
         return order;
     }
+
     private long saveTaco(Long orderId, int orderKey, Taco taco) {
         taco.setCreatedAt(new Date());
         PreparedStatementCreatorFactory pscf =
@@ -90,6 +91,7 @@ public class JdbcOrderRepository implements OrderRepository {
 
         return tacoId;
     }
+
     private void saveIngredientRefs(
             long tacoId, List<IngredientRef> ingredientRefs) {
         int key = 0;
