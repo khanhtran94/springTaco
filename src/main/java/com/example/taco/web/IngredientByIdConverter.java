@@ -2,6 +2,7 @@ package com.example.taco.web;
 
 import com.example.taco.Ingredient;
 import com.example.taco.data.IngredientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
     private IngredientRepository ingredientRepository;
 
+    @Autowired
     public IngredientByIdConverter(IngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
     }
