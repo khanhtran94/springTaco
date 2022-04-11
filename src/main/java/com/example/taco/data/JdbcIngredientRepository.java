@@ -3,6 +3,7 @@ package com.example.taco.data;
 import com.example.taco.Ingredient;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,6 +35,7 @@ public class JdbcIngredientRepository implements IngredientRepository {
     }
 
     @Override
+    @Transactional
     public Ingredient save(Ingredient ingredient) {
         jdbcTemplate.update(
                 "insert into INGREDIENT (id, name, type) values (?, ?, ?)",
